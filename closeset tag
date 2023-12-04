@@ -1,0 +1,22 @@
+
+        $(document).on('keyup','.rate',function(e){
+            calculateRatePriceQty(event.target);
+        })
+
+        function calculateRatePriceQty(node){
+
+            let closest_tr = $(node).closest('tr');
+            let qty = parseInt(closest_tr.find('.qty').val());
+            let rate = parseInt(closest_tr.find('.rate').val());
+            let price = parseInt(closest_tr.find('.price').val());
+
+            if(price > 0 && rate > 0 && !qty){
+                closest_tr.find('.qty').val(price/rate);
+            }else if(price && qty && !rate){
+                closest_tr.find('.rate').val(price/qty)
+            }else if(rate && qty && !price){
+                closest_tr.find('.price').val(rate*price);
+            }
+
+            console.log(price,rate,qty);
+        }
