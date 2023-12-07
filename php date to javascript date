@@ -1,0 +1,2 @@
+  let date = new Date(lpo_project.start_date);
+  let start_date =  date.getDate()  + '/' +(date.getMonth() + 1) + '/' +  date.getFullYear()
