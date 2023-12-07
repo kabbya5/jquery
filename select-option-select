@@ -1,0 +1,3 @@
+$('#mySelect option').filter(function() {
+    return data.includes($(this).val());
+}).prop('selected', true);
