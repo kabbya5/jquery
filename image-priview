@@ -1,0 +1,19 @@
+ $(document).on('change','.employee-document',function(){
+        const file = event.target.files[0];
+        var extension = file.name.substring(file.name.lastIndexOf('.') + 1);
+
+        if(file.type.startsWith('image/')) {
+            if (file) {
+                const fileReader = new FileReader();
+
+                fileReader.onload = function () {
+                ;    $(".imagePreview").attr("src", this.result).show();
+                }
+
+                fileReader.readAsDataURL(file);
+            }
+        }else{
+            $('.imagePreview').hide();
+            $('.unsupport-extension').text(extension);
+        }
+    })
