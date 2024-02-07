@@ -1,0 +1,43 @@
+$(".progress-circle").each(function (index, element) {
+        let progressCircle = $(this);
+        let progressValue = $(this).children('.progress-value');
+        let endValue = progressValue.attr('data-end');
+        let valueType = progressValue.attr('data-type');
+        let startValue = 0;
+        let bg = '';
+
+        if(endValue <= 10){
+            bg = '#FC345C';
+        }else if(endValue < 20){
+            bg = '#F57B51';
+        }
+        else if(endValue < 35){
+            bg = '#EA9215';
+        }
+        else if(endValue < 50){
+            bg = '#FFC436';
+        }else if(endValue < 70){
+            bg = '#8BD5CB';
+        }else if(endValue < 85){
+            bg = '#0174BE';
+        }
+        else{
+            bg = '#2E5A1C';
+        }
+        progressCircle.css('background',`conic-gradient(${bg} ${startValue * 3.6}deg, #ededed 0deg)`)
+        // if (endValue < 100){
+            let process = setInterval(() => {
+                progressValue.html(startValue + valueType);
+                progressCircle.css('background',`conic-gradient(${bg} ${startValue * 3.6}deg, #ededed 0deg)`)
+                if(startValue == endValue){
+                    clearInterval(process);
+                }
+                startValue++;
+
+            }, 15);
+        // }else{
+        //     progressValue.html(endValue);
+        //     progressCircle.css('background',`conic-gradient(${bg} ${50 * 3.6}deg, #ededed 0deg)`)
+        // }
+
+    })
