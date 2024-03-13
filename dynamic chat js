@@ -1,0 +1,22 @@
+var myChart = new Chart("line_chart",{
+        type:'line',
+        data:{
+            labels: x_values,
+            datasets:[],
+        },
+        options: {
+            legend: {display: false}
+        }
+    })
+
+    for (index in lables){
+        let newDataset = {
+            label:index,
+            data:lables[index],
+
+        };
+        console.log(newDataset.data);
+        myChart.config.data.datasets.push(newDataset);
+    }
+
+    myChart.update();
