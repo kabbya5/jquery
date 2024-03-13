@@ -1,4 +1,19 @@
-var myChart = new Chart("line_chart",{
+function chartjs(data){
+    let x_values = [];
+    let lables = {};
+
+    $.each(data[0], function(key,value){
+        x_values.push(key);
+        $.each(value,function(grade,remark){
+            if(!lables[grade]){
+                lables[grade] = []
+            }
+            lables[grade].push(remark)
+        })
+    })
+
+
+    var myChart = new Chart("line_chart",{
         type:'line',
         data:{
             labels: x_values,
@@ -18,5 +33,8 @@ var myChart = new Chart("line_chart",{
         console.log(newDataset.data);
         myChart.config.data.datasets.push(newDataset);
     }
+
+    myChart.update();
+}
 
     myChart.update();
