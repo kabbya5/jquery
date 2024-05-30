@@ -1,0 +1,29 @@
+ $('#profile-img').change(function(){
+        var url = $(this).data('url');
+        var formData = new FormData();
+        formData.append('image', $('#profile-img')[0].files[0]);
+        var _token = $(this).data('token');
+
+        let reader = new FileReader();
+        reader.onload = function(e){
+            $('#sidebar .image-box').html('<img class="profile-avatar" src='+e.target.result +'>');
+        }
+        reader.readAsDataURL(this.files[0]);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': _token // Set CSRF token in headers
+            },
+            success: function(res) {
+                toastr.success('Profile picture updated successfully');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
