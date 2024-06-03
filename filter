@@ -1,0 +1,72 @@
+$(document).ready(function(){
+    $('.toggler').click(function(){
+        var toggle = $(this).data('togglor');
+        $(`.${toggle}`).toggleClass('d-none');
+    });
+
+    $('.filter-btn').click(function(){
+        $('.filter').toggleClass('show');
+    })
+
+    function filterProducts(){
+        var price_range = null;
+        var category = [];
+        var flower = [];
+        var event = null;
+
+        if ($('.price-filter').is(':checked')){
+            price_range = $('.price-filter:checked').val();
+        }
+
+        $('.category-checkbox').each(function(){
+            if($(this).is(':checked')){
+                category.push($(this).val());
+            }
+        });
+
+        $('.flower-checkbox').each(function(){
+            if($(this).is(':checked')){
+                flower.push($(this).val());
+            }
+        });
+
+        if($('.event-filter').is(':checked')){
+            event = $('.event:checked').val();
+        }
+
+        $.ajax({
+            type:'POST',
+            url:"{{route('shop.product.filter')}}",
+            data:{
+                _token:"{{csrf_token()}}",
+                price_range:price_range,
+                categories:category,
+                flowers:flower,
+                events:event,
+            },
+            success:function(res){
+               $('#shop_product').html(res);
+            },
+            // error:function(){
+            //     alert('error');
+            // }
+        })
+    }
+
+    $('.price-filter').change(function() {
+        filterProducts();
+    });
+
+    $('.category-checkbox').change(function(){
+        filterProducts();
+    });
+
+    $('.flower-checkbox').change(function(){
+        filterProducts();
+    });
+
+    $('.event-checkbox').change(function(){
+        filterProducts();
+    });
+
+})
