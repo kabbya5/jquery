@@ -1,0 +1,12 @@
+$subbrands = SubBrand::where('name', 'like', '%' . $search_input . '%')->get();
+                $subbrandIds = $subbrands->pluck('id')->unique();
+                $brandIds = $subbrands->pluck('brand_id')->unique();
+
+                $categories = Category::whereHas('brands', function($query) use ($brandIds) {
+                    $query->whereIn('id', $brandIds);
+                })->with(['brands' => function($query) use ($brandIds, $subbrandIds) {
+                    $query->whereIn('id', $brandIds)
+                          ->with(['subbrands' => function($query) use ($subbrandIds) {
+                              $query->whereIn('id', $subbrandIds);
+                          }]);
+                }])->get();
